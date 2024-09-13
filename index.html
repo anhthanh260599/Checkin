@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chấm công</title>
+</head>
+<body>
+<h1>Chấm công</h1>
+
+<img id="qr-image" src="./assets/images/qr-chamcong.jpg" alt="QR Code Image" style="display:none;">
+<p id="qr-result"></p>
+
+<a href="" id="qr-link">Chấm công</a>
+
+<!--<script src="../qr-scanner.umd.min.js"></script>-->
+<!--<script src="../qr-scanner.legacy.min.js"></script>-->
+<script type="module">
+    import QrScanner from "./assets/js/qr-scanner/qr-scanner.min.js";
+
+    const fileSelector = document.getElementById('file-selector');
+
+    const qrImage = document.getElementById('qr-image');
+    const qrResult = document.getElementById('qr-result');
+    const qrLink = document.getElementById('qr-link');
+
+    function setResult(result) {
+        qrResult.textContent = result.data;
+        qrLink.setAttribute("href",result.data)
+        console.log(result.data);
+    }
+
+
+    QrScanner.scanImage(qrImage, { returnDetailedScanResult: true })
+        .then(result => setResult(result))
+        .catch(e => setResult({ data: e || 'No QR code found.' }));
+
+</script>
+</body>
+</html>
